@@ -1,0 +1,49 @@
+# DRAFT - not finalized. Open items before enabling:
+#   1. This package ships no test suite, so this runs `npm run build` instead of
+#      `pulsar --test test` (the sibling ide-java-pulsar runs tests).
+#   2. `npm install` runs script.js postinstall, which currently hard-fails on the
+#      dead server URL. CI will stay red until Task 2/5 repoint properties.json.
+#   3. Pulsar action pinned to pulsar-edit/action-pulsar-dependency@v3.4 to match
+#      the sibling ide-java-pulsar workflow; confirm the pin before enabling.
+name: CI
+
+on:
+  - push
+  - pull_request
+
+env:
+  CI: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Pulsar
+        uses: pulsar-edit/action-pulsar-dependency@v3.4
+
+      - name: Install package dependencies
+        run: pulsar -p install
+
+      - name: Build
+        run: npm run build

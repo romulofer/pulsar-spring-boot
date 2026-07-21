@@ -1,2 +1,4 @@
-# atom-spring-boot is no longer actively maintained by VMware, Inc.
+= pulsar-spring-boot
+
+Pulsar migration of the archived spring-projects/atom-spring-boot package. See README.md.
 

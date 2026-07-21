@@ -1,10 +1,10 @@
-# Atom package for Spring Boot Application Properties
+# Pulsar package for Spring Boot Application Properties
 
-Atom package and Language Server providing support for Spring Boot applications development. Beans data for `.java` file, and editing support for `application.properties`, `application.yml` files.
+Pulsar package and Language Server providing support for Spring Boot applications development. Beans data for `.java` file, and editing support for `application.properties`, `application.yml` files.
 
 ## Installation:
 
-Install it from Atom `Install Packages`, search for `spring-boot` 
+Install it from Pulsar's package view, search for `pulsar-spring-boot` 
 
 ## Usage:
 
@@ -25,17 +25,17 @@ To build all these pieces you normally only need to run:
 
     npm install && npm run build
 
-Now you can link it to Atom:
+Now you can link it to Pulsar:
 
-    apm link .
+    ppm link .
 
-Open Atom or execute `Refresh Window` in the opened instance (Packages -> Command Palette -> Toggle then search for the command).
+Open Pulsar or execute `Refresh Window` in the opened instance (Packages -> Command Palette -> Toggle then search for the command).
 
 ## Debugging
 
-**Client Side Debugging**: Open Atom's `Developer Tools` view - View -> Developer -> Toggle Developer Tools
+**Client Side Debugging**: Open Pulsar's `Developer Tools` view - View -> Developer -> Toggle Developer Tools
 
-**Server Side Debugging**:  Change `launchVmArgs(jvm)` implementation in `lib/main.js` to be:
+**Server Side Debugging**:  Change the `launchVmArgs(jvm)` implementation in `lib/spring-boot-language-client.ts` (then run `npm run build` to regenerate `build/`) to be:
 ```
     launchVmArgs(jvm) {
         return Promise.resolve([

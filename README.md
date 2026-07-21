@@ -1,8 +1,21 @@
-# Atom package for Spring Boot projects
+# pulsar-spring-boot
 
-[![macOS Build Status](https://travis-ci.org/spring-projects/atom-spring-boot.svg?branch=master)](https://travis-ci.org/spring-projects/atom-spring-boot) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/1jvknxt9jhykgrxo?svg=true)](https://ci.appveyor.com/project/spring-projects/atom-spring-boot/branch/master) [![Dependency Status](https://david-dm.org/spring-projects/atom-spring-boot.svg)](https://david-dm.org/spring-projects/atom-spring-boot)
+Pulsar package and Language Server providing support for working with Spring Boot apps. This is a migration of the archived `spring-projects/atom-spring-boot` package (VMware/Pivotal, EPL-1.0), adapted to run on the Pulsar editor.
 
-Atom package and Language Server providing support for working with Spring Boot apps.
+## Requirements
+
+Install these companion packages (they are pulled in automatically via `package-deps` on first activation):
+
+- [`atom-ide-base`](https://web.pulsar-edit.dev/packages/atom-ide-base), the Pulsar replacement for the archived `atom-ide-ui`, surfaces the IDE UI.
+- `ide-java-pulsar`, the Pulsar replacement for the archived `ide-java`, provides general Java language support.
+
+A JDK (Java 17 or newer) must be on `JAVA_HOME` or `PATH`; Spring Boot live hints require a JDK, not a JRE.
+
+## Installation
+
+Install from Pulsar's package view (search for `pulsar-spring-boot`), or from the command line:
+
+    ppm install pulsar-spring-boot
 
 # Java Support
 
@@ -18,7 +31,7 @@ If you find an issue please raise it here: https://github.com/spring-projects/st
 ## Functionality
 
 ### Navigating the source code - Go to symbol in file
-Easy navigation to Spring-specific elements of your source code. Open `.java` file then open Atom's `Outline View` - View -> Toggle Outline View
+Easy navigation to Spring-specific elements of your source code. Open `.java` file then open Pulsar's `Outline View` - View -> Toggle Outline View
 
 ![Go to Symbol in file][screenshot-navigation]
 
@@ -58,7 +71,7 @@ Additional code completions for Spring-specific annotations
 
 # Properties Support
 
-Atom package and Language Server providing support for working with Spring Boot 
+Pulsar package and Language Server providing support for working with Spring Boot 
 `application.properties` and `application.yml` files.
 
 ## Usage:
@@ -107,15 +120,15 @@ Please report bugs, issues and feature requests on the [Github STS4 issue tracke
 
 # Releases:
 
-Released versions of this package can be installed directly from the Atom package installer.
+Released versions of this package can be installed directly from the Pulsar package view.
 
-There are also development snapshots available with the latest fixes and improvements from release git repository: https://github.com/spring-projects/atom-spring-boot 
-1. Clone the release repository for Atom package if not already cloned and navigate to `atom-spring-boot` folder
+There are also development snapshots available with the latest fixes and improvements from the release git repository: https://github.com/romulofer/pulsar-spring-boot 
+1. Clone the release repository if not already cloned and navigate to the `pulsar-spring-boot` folder
 2. Run `git clean -fxd` - necessary to delete out of date LS JAR file and dependency packages
 3. Run `git pull` - get the latest changes
-3. Run `npm install` - Install latest dependecnies and download proper LS JAR
-4. Run `apm link .` - Link the package to Atom
-5. Either start Atom or Reload Window in Atom 
+3. Run `npm install` - Install latest dependencies and download proper LS JAR
+4. Run `ppm link .` - Link the package to Pulsar
+5. Either start Pulsar or Reload Window in Pulsar 
 
 [screenshot-live-hovers]: https://raw.githubusercontent.com/spring-projects/sts4/4167094ab94a05657fe4b495770bf93ce3a1585f/atom-extensions/atom-spring-boot/readme-imgs/screenshot-live-hovers.png
 [screenshot-code-completion]: https://raw.githubusercontent.com/spring-projects/sts4/874c74f3bae0dd08250aeceb46ae5cc2ca720096/atom-extensions/atom-spring-boot/readme-imgs/screenshot-code-completion.png

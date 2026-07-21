@@ -8,10 +8,15 @@ export class SpringBootLanguageClient extends JavaProcessLanguageClient {
 
     constructor() {
         //noinspection JSAnnotator
-        super(
-            path.join(__dirname, '..', 'server'),
-            'spring-boot-language-server.jar'
-        );
+        const overrideJar = atom.config.get('spring-boot.serverJar');
+        if (typeof overrideJar === 'string' && overrideJar.length > 0) {
+            super(path.dirname(overrideJar), path.basename(overrideJar));
+        } else {
+            super(
+                path.join(__dirname, '..', 'server'),
+                'spring-boot-language-server.jar'
+            );
+        }
         // this.DEBUG = true;
     }
 
@@ -39,7 +44,7 @@ export class SpringBootLanguageClient extends JavaProcessLanguageClient {
 
     activate() {
         require('atom-package-deps')
-            .install('spring-boot')
+            .install('pulsar-spring-boot')
             .then(() => console.debug('All dependencies installed, good to go'));
         super.activate();
     }
@@ -56,8 +61,8 @@ export class SpringBootLanguageClient extends JavaProcessLanguageClient {
         ];
         if (!jvm.isJdk()) {
             this.showErrorMessage(
-                '"Boot-Java" Package Functionality Limited',
-                'JAVA_HOME or PATH environment variable seems to point to a JRE. A JDK is required, hence Boot Hints are unavailable.'
+                'Spring Boot Language Support Limited',
+                'JAVA_HOME or PATH points to a JRE. The Spring Boot Language Server needs a JDK (Java 17 or newer); Boot live hints are unavailable until one is configured.'
             );
         }
         return Promise.resolve(vmargs);
