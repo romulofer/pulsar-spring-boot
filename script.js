@@ -30,8 +30,12 @@ fileExists(localFileName).then(exists => {
            .then(() => download(serverDownloadUrl))
            .then(data => fs.writeFileSync(localFileName, data))
            .then(() => fileExists(localFileName))
-           .then(doesExist => { if (!doesExist) throw Error(`Failed to install the ${this.getServerName()} language server`) })
-           .then(() => console.log(`Successfully downloaded ${serverDownloadUrl}`));
+           .then(doesExist => { if (!doesExist) throw Error('Failed to install the Spring Boot language server') })
+           .then(() => console.log(`Successfully downloaded ${serverDownloadUrl}`))
+           .catch(error => {
+               console.error(`Could not download the Spring Boot language server from ${serverDownloadUrl}: ${error.message || error}`);
+               console.error('Install will continue. Provide a jar manually via the spring-boot.serverJar setting, or place one at ' + localFileName + '.');
+           });
    }
 });
 
