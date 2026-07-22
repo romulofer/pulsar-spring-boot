@@ -1,3 +1,4 @@
+/// <reference path="../node_modules/atom-languageclient/typings/atom-ide/index.d.ts" />
 import { JavaProcessLanguageClient, JavaOptions } from '@pivotal-tools/atom-languageclient-commons';
 import { BootStsAdapter } from './boot-sts-adapter';
 import { ActiveServer } from 'atom-languageclient';
@@ -12,6 +13,7 @@ export declare class SpringBootLanguageClient extends JavaProcessLanguageClient 
     activate(): void;
     preferJdk(): boolean;
     launchVmArgs(jvm: JVM): Promise<string[]>;
+    provideDefinitions(): 'atom-ide'.DefinitionProvider;
     createStsAdapter(): BootStsAdapter;
     filterChangeWatchedFiles(filePath: string): boolean;
     getJavaOptions(): JavaOptions;

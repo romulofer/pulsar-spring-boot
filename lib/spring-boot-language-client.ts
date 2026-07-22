@@ -68,6 +68,18 @@ export class SpringBootLanguageClient extends JavaProcessLanguageClient {
         return Promise.resolve(vmargs);
     }
 
+    provideDefinitions() {
+        // atom-ide-definitions picks a single highest-priority provider per
+        // editor, not a merge. The Spring Boot Language Server only resolves
+        // Spring specific symbols, so at the default priority it would shadow
+        // ide-java-pulsar (JDT) and break Java go-to-definition. Drop below
+        // JDT's priority of 20; this provider still wins on the boot-properties
+        // grammars, where no other provider registers.
+        const provider = super.provideDefinitions();
+        provider.priority = 1;
+        return provider;
+    }
+
     createStsAdapter() {
         return new BootStsAdapter();
     }
