@@ -13,6 +13,11 @@ const DECORATION_OPTIONS: DecorationOptions = {
 
 export class BootStsAdapter extends StsAdapter {
 
+    // Signature of the ranges last applied per editor, so repeated identical
+    // highlight notifications (the running app polls and re-sends) do not tear
+    // down and rebuild every marker on the render thread.
+    private lastRangeSignatures = new WeakMap<TextEditor, string>();
+
     constructor() {
         super();
     }
@@ -22,11 +27,14 @@ export class BootStsAdapter extends StsAdapter {
     }
 
     private markHintsForEditor(editor: TextEditor, codeLenses: CodeLens[]) {
-        editor.getDecorations(DECORATION_OPTIONS).map(decoration => decoration.getMarker()).forEach(m => m.destroy());
-        const ranges = codeLenses.map(cl => cl.range);
-        if (Array.isArray(ranges)) {
-            ranges.forEach(range => this.createHintMarker(editor, range));
+        const ranges = Array.isArray(codeLenses) ? codeLenses.map(cl => cl.range) : [];
+        const signature = JSON.stringify(ranges);
+        if (this.lastRangeSignatures.get(editor) === signature) {
+            return;
         }
+        this.lastRangeSignatures.set(editor, signature);
+        editor.getDecorations(DECORATION_OPTIONS).map(decoration => decoration.getMarker()).forEach(m => m.destroy());
+        ranges.forEach(range => this.createHintMarker(editor, range));
         // const gutter = editor.gutterWithName(BOOT_HINT_GUTTER_NAME);
         // if (gutter) {
         //     if (!ranges || !ranges.length) {
